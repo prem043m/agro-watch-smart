@@ -1,13 +1,13 @@
 export const mockFarmer = {
   id: 1,
-  name: "John Smith",
-  location: "California Valley"
+  name: "Rajesh Kumar",
+  location: "Mandya, Karnataka"
 };
 
 export const mockFarms = [
-  { id: 1, farmerId: 1, name: "North Field", cropType: "Wheat", area: 50 },
-  { id: 2, farmerId: 1, name: "East Valley", cropType: "Corn", area: 75 },
-  { id: 3, farmerId: 1, name: "South Hills", cropType: "Soybeans", area: 60 }
+  { id: 1, farmerId: 1, name: "Mysuru Fields", cropType: "Sugarcane", area: 50 },
+  { id: 2, farmerId: 1, name: "Hassan Valley", cropType: "Ragi", area: 75 },
+  { id: 3, farmerId: 1, name: "Tumkur Plains", cropType: "Rice", area: 60 }
 ];
 
 export const generateSensorData = (farmId: number) => {
@@ -38,9 +38,11 @@ export const mockIrrigations = [
 
 export const calculateYieldPrediction = (cropType: string, avgTemp: number, avgMoisture: number) => {
   const baseYields: Record<string, number> = {
-    "Wheat": 3.5,
-    "Corn": 8.5,
-    "Soybeans": 3.0
+    "Sugarcane": 70.0,
+    "Ragi": 2.5,
+    "Rice": 4.5,
+    "Cotton": 2.0,
+    "Groundnut": 2.8
   };
   
   const base = baseYields[cropType] || 3.0;
