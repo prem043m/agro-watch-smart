@@ -1,4 +1,4 @@
-FROM maven:3.9.4-eclipse-temurin-17 AS build
+FROM maven:3.9.4-eclipse-temurin-21 AS build
 WORKDIR /workspace
 
 # Copy only the files needed for a build. The project doesn't include a .mvn wrapper folder,
@@ -9,7 +9,7 @@ COPY src ./src
 # Build the application (skip tests for faster builds in CI/dev).
 RUN mvn -f pom.xml -DskipTests package
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build /workspace/target/*.jar app.jar
 EXPOSE 8080

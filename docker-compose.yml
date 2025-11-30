@@ -1,6 +1,8 @@
+
 services:
   db:
     image: postgres:15
+    container_name: postgres-db
     restart: always
     environment:
       POSTGRES_USER: agrosmart
@@ -11,21 +13,45 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL","pg_isready -U agrosmart -d agrosmartdb"]
+      test: ["CMD-SHELL", "pg_isready -U agrosmart -d agrosmartdb"]
       interval: 5s
       timeout: 3s
       retries: 10
 
-  backend:
-    build: ./backend
-    ports:
-      - "8080:8080"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/agrosmartdb
-      SPRING_DATASOURCE_USERNAME: agrosmart
-      SPRING_DATASOURCE_PASSWORD: agrosmartpass
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8081:80"
     depends_on:
       - db
+
+  # backend:
+  #   build: ./backend
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/agrosmartdb
+  #     SPRING_DATASOURCE_USERNAME: agrosmart
+  #     SPRING_DATASOURCE_PASSWORD: agrosmartpass
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5173:5173"
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     VITE_API_URL: http://localhost:8080
 
 volumes:
   db_data:
