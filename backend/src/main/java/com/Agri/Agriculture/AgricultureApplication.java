@@ -1,4 +1,3 @@
-
 package com.Agri.Agriculture;
 
 import org.springframework.boot.SpringApplication;

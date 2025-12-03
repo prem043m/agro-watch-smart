@@ -11,6 +11,7 @@ import Irrigation from "./pages/Irrigation";
 import Analytics from "./pages/Analytics";
 import CropPrices from "./pages/CropPrices";
 import Profile from "./pages/Profile";
+import FarmDetails from "./pages/FarmDetails";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/irrigation" element={<DashboardLayout><Irrigation /></DashboardLayout>} />
           <Route path="/analytics" element={<DashboardLayout><Analytics /></DashboardLayout>} />
           <Route path="/crop-prices" element={<DashboardLayout><CropPrices /></DashboardLayout>} />
+          <Route path="/farms/:id" element={<DashboardLayout><FarmDetails /></DashboardLayout>} />
           <Route path="/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -1,15 +1,23 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sprout, Droplets, ThermometerSun, TrendingUp } from "lucide-react";
-import { mockFarms, generateSensorData } from "@/lib/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFarms } from "@/lib/api";
+import { generateSensorData, mockFarms } from "@/lib/mockData";
 
 export default function Dashboard() {
-  const latestSensorData = mockFarms.map(farm => {
+  const { data: farms, isLoading } = useQuery({ queryKey: ["farms"], queryFn: fetchFarms });
+
+  const latestSensorData = (farms ?? []).map((farm) => {
     const data = generateSensorData(farm.id);
     return { farm, sensor: data[data.length - 1] };
   });
 
-  const avgMoisture = latestSensorData.reduce((acc, d) => acc + d.sensor.soilMoisture, 0) / latestSensorData.length;
-  const avgTemp = latestSensorData.reduce((acc, d) => acc + d.sensor.temperature, 0) / latestSensorData.length;
+  const avgMoisture = latestSensorData.length
+    ? latestSensorData.reduce((acc, d) => acc + d.sensor.soilMoisture, 0) / latestSensorData.length
+    : 0;
+  const avgTemp = latestSensorData.length
+    ? latestSensorData.reduce((acc, d) => acc + d.sensor.temperature, 0) / latestSensorData.length
+    : 0;
 
   return (
     <div className="space-y-6">
@@ -25,7 +33,7 @@ export default function Dashboard() {
             <Sprout className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockFarms.length}</div>
+            <div className="text-2xl font-bold">{farms ? farms.length : "-"}</div>
             <p className="text-xs text-muted-foreground">Active farms</p>
           </CardContent>
         </Card>
@@ -59,7 +67,7 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {mockFarms.reduce((acc, f) => acc + f.area, 0)} ha
+              {(farms ?? mockFarms).reduce((acc, f) => acc + (f.area ?? 0), 0)} ha
             </div>
             <p className="text-xs text-muted-foreground">Under cultivation</p>
           </CardContent>
@@ -72,7 +80,7 @@ export default function Dashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {latestSensorData.map(({ farm, sensor }) => (
+              {latestSensorData.map(({ farm, sensor }) => (
               <div key={farm.id} className="flex items-center justify-between border-b pb-4 last:border-0">
                 <div>
                   <p className="font-medium">{farm.name}</p>
