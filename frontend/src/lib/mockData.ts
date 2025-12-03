@@ -5,9 +5,9 @@ export const mockFarmer = {
 };
 
 export const mockFarms = [
-  { id: 1, farmerId: 1, name: "Mysuru Fields", cropType: "Sugarcane", area: 50 },
-  { id: 2, farmerId: 1, name: "Hassan Valley", cropType: "Ragi", area: 75 },
-  { id: 3, farmerId: 1, name: "Tumkur Plains", cropType: "Rice", area: 60 }
+  { id: 1, farmerId: 1, name: "Mysuru Fields", cropType: "Sugarcane", area: 50, soilType: "Loam", irrigationType: "Drip", latitude: 12.305, longitude: 76.655, lastPlanted: "2025-06-15", expectedYield: 72.5 },
+  { id: 2, farmerId: 1, name: "Hassan Valley", cropType: "Ragi", area: 75, soilType: "Sandy", irrigationType: "Flood", latitude: 13.005, longitude: 75.925, lastPlanted: "2025-05-20", expectedYield: 3.1 },
+  { id: 3, farmerId: 1, name: "Tumkur Plains", cropType: "Rice", area: 60, soilType: "Clay", irrigationType: "Surface", latitude: 13.330, longitude: 77.110, lastPlanted: "2025-07-01", expectedYield: 4.7 }
 ];
 
 export const generateSensorData = (farmId: number) => {
